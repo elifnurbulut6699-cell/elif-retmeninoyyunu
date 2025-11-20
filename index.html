@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gelişim Oyunları – Sürükle Bırak</title>
+<style>
+body { font-family:'Comic Sans MS', cursive; background:#f0f8ff; padding:10px; text-align:center; }
+h2 { color:#ff6f61; margin-top:40px; }
+.cards { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-bottom:20px; }
+.draggable { padding:10px 12px; background:#ffe680; border:2px solid #ffb84d; border-radius:12px; cursor:grab; font-size:16px; font-weight:bold; user-select:none; }
+.container { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-bottom:20px; }
+.card { background:#fff; border-radius:16px; box-shadow:0 4px 8px rgba(0,0,0,0.1); width:300px; padding:10px; display:flex; flex-direction:column; align-items:center; }
+.card h3 { background:#4bd1ff; color:white; padding:6px 12px; border-radius:12px; width:100%; margin:0 0 10px 0; font-size:18px; }
+.card img { width:180px; height:180px; object-fit:contain; margin-bottom:10px; }
+.dropzone { min-height:120px; width:90%; background:#e6f7ff; border:2px dashed #4bd1ff; border-radius:12px; padding:6px; display:flex; flex-direction:column; gap:6px; align-items:center; }
+#checkBtn { margin-top:15px; padding:10px 16px; background:#ff6f61; color:white; border:none; border-radius:12px; cursor:pointer; font-weight:bold; }
+#result { margin-top:12px; font-weight:bold; font-size:18px; }
+</style>
+</head>
+<body>
+
+<!-- 1️⃣ Bilgisayar 💻 -->
+<h2>Bilgisayar 💻 (Öğrenme ve Çalışma)</h2>
+<div class="cards" id="computerCards">
+    <div class="draggable" draggable="true" data-correct="left" data-game="computer">Çok ağır ve büyüktür, yerinden kaldırmak zordur.</div>
+    <div class="draggable" draggable="true" data-correct="right" data-game="computer">Çok hafif ve incedir, her yere taşınır.</div>
+    <div class="draggable" draggable="true" data-correct="both" data-game="computer">İkisi de yazı yazmamızı sağlar (Klavye kullanır).</div>
+    <div class="draggable" draggable="true" data-correct="left" data-game="computer">Ekrana dokunarak kullanamazsın.</div>
+    <div class="draggable" draggable="true" data-correct="right" data-game="computer">Ekranına parmakla dokunabilirsin (Dokunmatik).</div>
+    <div class="draggable" draggable="true" data-correct="both" data-game="computer">İkisi de bilgileri unutmadan saklar (HDMI bağlantısı dahil).</div>
+</div>
+<div class="container">
+    <div class="card">
+        <h3>Günümüz (Yeni)</h3>
+        <img src="bilğisayar1.png" alt="Yeni Bilgisayar">
+        <div class="dropzone" id="computerRight"></div>
+    </div>
+    <div class="card">
+        <h3>Ortak (Benzer)</h3>
+        <img src="bilgisayar3.jpg" alt="Ortak Bilgisayar">
+        <div class="dropzone" id="computerCommon"></div>
+    </div>
+    <div class="card">
+        <h3>Geçmiş (Eski)</h3>
+        <img src="bilğisayar2.png" alt="Eski Bilgisayar">
+        <div class="dropzone" id="computerLeft"></div>
+    </div>
+</div>
+<button id="computerCheck">Bilgisayar Doğru/Yanlış Kontrol</button>
+<div id="computerResult"></div>
+
+<!-- 2️⃣ Televizyon 📺 -->
+<h2>Televizyon 📺 (İzleme ve Eğlence)</h2>
+<div class="cards" id="tvCards">
+    <div class="draggable" draggable="true" data-correct="left" data-game="tv">Arkası şişkin ve kalındır (Tüplü TV).</div>
+    <div class="draggable" draggable="true" data-correct="right" data-game="tv">Çok incedir, duvara tablo gibi asılabilir.</div>
+    <div class="draggable" draggable="true" data-correct="both" data-game="tv">İkisi de uzaktan kumanda ile kanal değiştirir.</div>
+    <div class="draggable" draggable="true" data-correct="left" data-game="tv">Kumandası çok büyük ve az tuşludur.</div>
+    <div class="draggable" draggable="true" data-correct="right" data-game="tv">İnternete bağlanır ve video uygulamaları çalıştırır (Akıllı TV, HDMI bağlantısı dahil).</div>
+    <div class="draggable" draggable="true" data-correct="both" data-game="tv">İkisi de bize ışıkla görüntü ve ses verir.</div>
+</div>
+<div class="container">
+    <div class="card">
+        <h3>Günümüz (Yeni)</h3>
+        <img src="televizyon1.png" alt="Yeni TV">
+        <div class="dropzone" id="tvRight"></div>
+    </div>
+    <div class="card">
+        <h3>Ortak (Benzer)</h3>
+        <img src="televizyon3.jpg" alt="Ortak TV">
+        <div class="dropzone" id="tvCommon"></div>
+    </div>
+    <div class="card">
+        <h3>Geçmiş (Eski)</h3>
+        <img src="televizyon2.png" alt="Eski TV">
+        <div class="dropzone" id="tvLeft"></div>
+    </div>
+</div>
+<button id="tvCheck">Televizyon Doğru/Yanlış Kontrol</button>
+<div id="tvResult"></div>
+
+<!-- 3️⃣ Çamaşır Makinesi 🧺 -->
+<h2>Çamaşır Makinesi 🧺 (Temizlik ve Ev İşleri)</h2>
+<div class="cards" id="washingCards">
+    <div class="draggable" draggable="true" data-correct="left" data-game="washing">Suyu ve deterjanı elle ayarlamak gerekir.</div>
+    <div class="draggable" draggable="true" data-correct="right" data-game="washing">Kendi kendine doğru suyu ve deterjanı ayarlar.</div>
+    <div class="draggable" draggable="true" data-correct="both" data-game="washing">İkisi de kirli çamaşırları temizler.</div>
+    <div class="draggable" draggable="true" data-correct="left" data-game="washing">Giysileri kurutma özelliği yoktur.</div>
+    <div class="draggable" draggable="true" data-correct="right" data-game="washing">Giysileri yıkadıktan sonra kurutabilir (HDMI veya modern bağlantı yoktur).</div>
+    <div class="draggable" draggable="true" data-correct="both" data-game="washing">İkisi de çalışırken dönen bir hazneye (Tambur) sahiptir.</div>
+</div>
+<div class="container">
+    <div class="card">
+        <h3>Günümüz (Yeni)</h3>
+        <img src="çamaşır2.png" alt="Yeni Çamaşır Makinesi">
+        <div class="dropzone" id="washingRight"></div>
+    </div>
+    <div class="card">
+        <h3>Ortak (Benzer)</h3>
+        <img src="çamaşır3.jpg" alt="Ortak Çamaşır Makinesi">
+        <div class="dropzone" id="washingCommon"></div>
+    </div>
+    <div class="card">
+        <h3>Geçmiş (Eski)</h3>
+        <img src="çamaşır1.png" alt="Eski Çamaşır Makinesi">
+        <div class="dropzone" id="washingLeft"></div>
+    </div>
+</div>
+<button id="washingCheck">Çamaşır Makinesi Doğru/Yanlış Kontrol</button>
+<div id="washingResult"></div>
+
+<script>
+let dragged = null;
+
+// Drag işlemi
+document.querySelectorAll(".draggable").forEach(item=>{
+    item.addEventListener("dragstart", e=>{ dragged=item; });
+});
+
+document.querySelectorAll(".dropzone").forEach(zone=>{
+    zone.addEventListener("dragover", e=>e.preventDefault());
+    zone.addEventListener("drop", e=>{
+        e.preventDefault();
+        if(dragged && dragged.dataset.game === zone.id.split(/(?=[A-Z])/)[0]) zone.appendChild(dragged);
+    });
+});
+
+// Kontrol fonksiyonu
+function checkGame(game){
+    const zones = {
+        left: document.getElementById(game+"Left"),
+        right: document.getElementById(game+"Right"),
+        both: document.getElementById(game+"Common")
+    };
+    let total=0, correct=0;
+    document.querySelectorAll(".draggable").forEach(item=>{
+        if(item.dataset.game!==game) return;
+        total++;
+        const correctZone = item.dataset.correct;
+        let parentId="";
+        if(item.parentElement===zones.left) parentId="left";
+        else if(item.parentElement===zones.right) parentId="right";
+        else if(item.parentElement===zones.both) parentId="both";
+        else parentId="none";
+
+        if(parentId===correctZone){
+            correct++;
+            item.style.border="5px solid limegreen";
+            item.style.background="rgba(144,238,144,0.4)";
+        } else {
+            item.style.border="5px solid red";
+            item.style.background="rgba(255,99,71,0.4)";
+        }
+    });
+    document.getElementById(game+"Result").textContent=`Doğru: ${correct} / ${total}`;
+}
+
+// Butonlar
+document.getElementById("computerCheck").addEventListener("click", ()=>checkGame("computer"));
+document.getElementById("tvCheck").addEventListener("click", ()=>checkGame("tv"));
+document.getElementById("washingCheck").addEventListener("click", ()=>checkGame("washing"));
+</script>
+
+</body>
+</html>
