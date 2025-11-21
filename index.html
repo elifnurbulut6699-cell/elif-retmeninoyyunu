@@ -5,23 +5,124 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gelişim Oyunları – Sürükle Bırak</title>
 <style>
-body { font-family:'Comic Sans MS', cursive; background:#f0f8ff; padding:10px; text-align:center; }
-h2 { color:#ff6f61; margin-top:40px; }
-.cards { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-bottom:20px; }
-.draggable { padding:10px 12px; background:#ffe680; border:2px solid #ffb84d; border-radius:12px; cursor:grab; font-size:16px; font-weight:bold; user-select:none; }
-.container { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-bottom:20px; }
-.card { background:#fff; border-radius:16px; box-shadow:0 4px 8px rgba(0,0,0,0.1); width:300px; padding:10px; display:flex; flex-direction:column; align-items:center; }
-.card h3 { background:#4bd1ff; color:white; padding:6px 12px; border-radius:12px; width:100%; margin:0 0 10px 0; font-size:18px; }
-.card img { width:180px; height:180px; object-fit:contain; margin-bottom:10px; }
-.dropzone { min-height:120px; width:90%; background:#e6f7ff; border:2px dashed #4bd1ff; border-radius:12px; padding:6px; display:flex; flex-direction:column; gap:6px; align-items:center; }
-#checkBtn { margin-top:15px; padding:10px 16px; background:#ff6f61; color:white; border:none; border-radius:12px; cursor:pointer; font-weight:bold; }
-#result { margin-top:12px; font-weight:bold; font-size:18px; }
+body { 
+    font-family:'Comic Sans MS', cursive; 
+    background: url('arkaplan.jpg') repeat;
+    background-size: cover;
+    padding:10px; 
+    text-align:center; 
+}
+
+/* Başlıklar */
+h2 { 
+    color:#ff6f61; 
+    margin-top:40px; 
+}
+
+/* Yönerge satırı */
+.tip { 
+    font-size:18px; 
+    font-weight:bold; 
+    margin-top:6px; 
+    color:#cc0000; 
+}
+
+/* Kart ve kutu tasarımları */
+.cards { 
+    display:flex; 
+    flex-wrap:wrap; 
+    justify-content:center; 
+    gap:12px; 
+    margin-bottom:20px; 
+}
+
+/* 🎨 SÜRÜKLENEN KARTLAR – CANLI RENKLER */
+.draggable { 
+    padding:10px 12px; 
+    background:#ffd24d;            /* daha canlı sarı */
+    border:2px solid #ff9f1a;      /* canlı turuncu kenarlık */
+    border-radius:12px; 
+    cursor:grab; 
+    font-size:16px; 
+    font-weight:bold; 
+    user-select:none; 
+}
+
+.container { 
+    display:flex; 
+    flex-wrap:wrap; 
+    justify-content:center; 
+    gap:12px; 
+    margin-bottom:20px; 
+}
+.card { 
+    background:#fff; 
+    border-radius:16px; 
+    box-shadow:0 4px 8px rgba(0,0,0,0.1); 
+    width:300px; 
+    padding:10px; 
+    display:flex; 
+    flex-direction:column; 
+    align-items:center; 
+}
+.card h3 { 
+    background:#4bd1ff; 
+    color:white; 
+    padding:6px 12px; 
+    border-radius:12px; 
+    width:100%; 
+    margin:0 0 10px 0; 
+    font-size:18px; 
+}
+.card img { 
+    width:180px; 
+    height:180px; 
+    object-fit:contain; 
+    margin-bottom:10px; 
+}
+
+/* Bırakma alanları */
+.dropzone { 
+    min-height:120px; 
+    width:90%; 
+    background:#e6f7ff; 
+    border:2px dashed #4bd1ff; 
+    border-radius:12px; 
+    padding:6px; 
+    display:flex; 
+    flex-direction:column; 
+    gap:6px; 
+    align-items:center; 
+}
+
+button { 
+    margin-top:15px; 
+    padding:10px 16px; 
+    background:#ff6f61; 
+    color:white; 
+    border:none; 
+    border-radius:12px; 
+    cursor:pointer; 
+    font-weight:bold; 
+}
+
+#computerResult, #tvResult, #washingResult { 
+    margin-top:12px; 
+    font-weight:bold; 
+    font-size:18px; 
+}
 </style>
 </head>
 <body>
 
+<!-- Ses dosyaları -->
+<audio id="correctSound" src="correct.mp3"></audio>
+<audio id="wrongSound" src="wrong.mp3"></audio>
+
 <!-- 1️⃣ Bilgisayar 💻 -->
-<h2>Bilgisayar 💻 (Öğrenme ve Çalışma)</h2>
+<h2>Bilgisayar 💻</h2>
+<div class="tip">İfadeleri uygun yerlere sürükleyiniz.</div>
+
 <div class="cards" id="computerCards">
     <div class="draggable" draggable="true" data-correct="left" data-game="computer">Çok ağır ve büyüktür, yerinden kaldırmak zordur.</div>
     <div class="draggable" draggable="true" data-correct="right" data-game="computer">Çok hafif ve incedir, her yere taşınır.</div>
@@ -30,6 +131,7 @@ h2 { color:#ff6f61; margin-top:40px; }
     <div class="draggable" draggable="true" data-correct="right" data-game="computer">Ekranına parmakla dokunabilirsin (Dokunmatik).</div>
     <div class="draggable" draggable="true" data-correct="both" data-game="computer">Bilgileri unutmadan saklar.</div>
 </div>
+
 <div class="container">
     <div class="card">
         <h3>Günümüz (Yeni)</h3>
@@ -47,11 +149,14 @@ h2 { color:#ff6f61; margin-top:40px; }
         <div class="dropzone" id="computerLeft"></div>
     </div>
 </div>
+
 <button id="computerCheck">Bilgisayar Doğru/Yanlış Kontrol</button>
 <div id="computerResult"></div>
 
 <!-- 2️⃣ Televizyon 📺 -->
-<h2>Televizyon 📺 (İzleme ve Eğlence)</h2>
+<h2>Televizyon 📺</h2>
+<div class="tip">İfadeleri uygun yerlere sürükleyiniz.</div>
+
 <div class="cards" id="tvCards">
     <div class="draggable" draggable="true" data-correct="left" data-game="tv">Arkası şişkin ve kalındır.</div>
     <div class="draggable" draggable="true" data-correct="right" data-game="tv">Çok incedir, duvara tablo gibi asılabilir.</div>
@@ -60,6 +165,7 @@ h2 { color:#ff6f61; margin-top:40px; }
     <div class="draggable" draggable="true" data-correct="right" data-game="tv">İnternete bağlanır ve video uygulamaları çalıştırır.</div>
     <div class="draggable" draggable="true" data-correct="both" data-game="tv">Bize görüntü ve ses verir.</div>
 </div>
+
 <div class="container">
     <div class="card">
         <h3>Günümüz (Yeni)</h3>
@@ -77,11 +183,14 @@ h2 { color:#ff6f61; margin-top:40px; }
         <div class="dropzone" id="tvLeft"></div>
     </div>
 </div>
+
 <button id="tvCheck">Televizyon Doğru/Yanlış Kontrol</button>
 <div id="tvResult"></div>
 
 <!-- 3️⃣ Çamaşır Makinesi 🧺 -->
-<h2>Çamaşır Makinesi 🧺 (Temizlik ve Ev İşleri)</h2>
+<h2>Çamaşır Makinesi 🧺</h2>
+<div class="tip">İfadeleri uygun yerlere sürükleyiniz.</div>
+
 <div class="cards" id="washingCards">
     <div class="draggable" draggable="true" data-correct="left" data-game="washing">Suyu ve deterjanı elle ayarlamak gerekir.</div>
     <div class="draggable" draggable="true" data-correct="right" data-game="washing">Kendi kendine doğru suyu ve deterjanı ayarlar.</div>
@@ -90,6 +199,7 @@ h2 { color:#ff6f61; margin-top:40px; }
     <div class="draggable" draggable="true" data-correct="right" data-game="washing">Giysileri yıkadıktan sonra kurutabilir.</div>
     <div class="draggable" draggable="true" data-correct="both" data-game="washing">Çalışırken dönen bir hazneye sahiptir.</div>
 </div>
+
 <div class="container">
     <div class="card">
         <h3>Günümüz (Yeni)</h3>
@@ -107,6 +217,7 @@ h2 { color:#ff6f61; margin-top:40px; }
         <div class="dropzone" id="washingLeft"></div>
     </div>
 </div>
+
 <button id="washingCheck">Çamaşır Makinesi Doğru/Yanlış Kontrol</button>
 <div id="washingResult"></div>
 
@@ -122,11 +233,12 @@ document.querySelectorAll(".dropzone").forEach(zone=>{
     zone.addEventListener("dragover", e=>e.preventDefault());
     zone.addEventListener("drop", e=>{
         e.preventDefault();
-        if(dragged && dragged.dataset.game === zone.id.split(/(?=[A-Z])/)[0]) zone.appendChild(dragged);
+        if(dragged && dragged.dataset.game === zone.id.split(/(?=[A-Z])/)[0]) 
+            zone.appendChild(dragged);
     });
 });
 
-// Kontrol fonksiyonu
+// Doğru/Yanlış kontrol + ses
 function checkGame(game){
     const zones = {
         left: document.getElementById(game+"Left"),
@@ -134,10 +246,13 @@ function checkGame(game){
         both: document.getElementById(game+"Common")
     };
     let total=0, correct=0;
+
     document.querySelectorAll(".draggable").forEach(item=>{
         if(item.dataset.game!==game) return;
+
         total++;
         const correctZone = item.dataset.correct;
+
         let parentId="";
         if(item.parentElement===zones.left) parentId="left";
         else if(item.parentElement===zones.right) parentId="right";
@@ -148,85 +263,22 @@ function checkGame(game){
             correct++;
             item.style.border="5px solid limegreen";
             item.style.background="rgba(144,238,144,0.4)";
+            document.getElementById("correctSound").play();
         } else {
             item.style.border="5px solid red";
             item.style.background="rgba(255,99,71,0.4)";
+            document.getElementById("wrongSound").play();
         }
     });
-    document.getElementById(game+"Result").textContent=`Doğru: ${correct} / ${total}`;
+
+    document.getElementById(game+"Result").textContent = `Doğru: ${correct} / ${total}`;
 }
 
-// Butonlar
+// Kontrol butonları
 document.getElementById("computerCheck").addEventListener("click", ()=>checkGame("computer"));
 document.getElementById("tvCheck").addEventListener("click", ()=>checkGame("tv"));
 document.getElementById("washingCheck").addEventListener("click", ()=>checkGame("washing"));
 </script>
-<style>
-   /* 📱 MOBİL UYUMLU TASARIM */
-@media (max-width: 1024px) {
-.card {
-width: 90%;
-}
-.cards {
-gap: 8px;
-}
-}
-
-@media (max-width: 768px) {
-
-```
-/* Kartlar alt alta gelsin */
-.container {
-    flex-direction: column;
-    align-items: center;
-}
-
-.card {
-    width: 94%;
-}
-
-/* Resim boyutları düşürülüyor */
-.card img {
-    width: 140px;
-    height: 140px;
-}
-
-/* Bırakma alanı */
-.dropzone {
-    width: 95%;
-    min-height: 90px;
-}
-
-/* Sürüklenebilir kutular küçülüyor */
-.draggable {
-    font-size: 14px;
-    padding: 8px 10px;
-}
-
-h2 {
-    font-size: 20px;
-}
-```
-
-}
-
-@media (max-width: 480px) {
-
-```
-.card img {
-    width: 115px;
-    height: 115px;
-}
-
-.draggable {
-    max-width: 95%;
-}
-```
-
-}
-
-</style>
-
 
 </body>
 </html>
