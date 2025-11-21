@@ -25,10 +25,10 @@ h2 { color:#ff6f61; margin-top:40px; }
 <div class="cards" id="computerCards">
     <div class="draggable" draggable="true" data-correct="left" data-game="computer">Çok ağır ve büyüktür, yerinden kaldırmak zordur.</div>
     <div class="draggable" draggable="true" data-correct="right" data-game="computer">Çok hafif ve incedir, her yere taşınır.</div>
-    <div class="draggable" draggable="true" data-correct="both" data-game="computer">İkisi de yazı yazmamızı sağlar (Klavye kullanır).</div>
+    <div class="draggable" draggable="true" data-correct="both" data-game="computer">Yazı yazmamızı sağlar (Klavye kullanır).</div>
     <div class="draggable" draggable="true" data-correct="left" data-game="computer">Ekrana dokunarak kullanamazsın.</div>
     <div class="draggable" draggable="true" data-correct="right" data-game="computer">Ekranına parmakla dokunabilirsin (Dokunmatik).</div>
-    <div class="draggable" draggable="true" data-correct="both" data-game="computer">İkisi de bilgileri unutmadan saklar (HDMI bağlantısı dahil).</div>
+    <div class="draggable" draggable="true" data-correct="both" data-game="computer">Bilgileri unutmadan saklar.</div>
 </div>
 <div class="container">
     <div class="card">
@@ -53,12 +53,12 @@ h2 { color:#ff6f61; margin-top:40px; }
 <!-- 2️⃣ Televizyon 📺 -->
 <h2>Televizyon 📺 (İzleme ve Eğlence)</h2>
 <div class="cards" id="tvCards">
-    <div class="draggable" draggable="true" data-correct="left" data-game="tv">Arkası şişkin ve kalındır (Tüplü TV).</div>
+    <div class="draggable" draggable="true" data-correct="left" data-game="tv">Arkası şişkin ve kalındır.</div>
     <div class="draggable" draggable="true" data-correct="right" data-game="tv">Çok incedir, duvara tablo gibi asılabilir.</div>
-    <div class="draggable" draggable="true" data-correct="both" data-game="tv">İkisi de uzaktan kumanda ile kanal değiştirir.</div>
+    <div class="draggable" draggable="true" data-correct="both" data-game="tv">Uzaktan kumanda ile kanal değiştirir.</div>
     <div class="draggable" draggable="true" data-correct="left" data-game="tv">Kumandası çok büyük ve az tuşludur.</div>
-    <div class="draggable" draggable="true" data-correct="right" data-game="tv">İnternete bağlanır ve video uygulamaları çalıştırır (Akıllı TV, HDMI bağlantısı dahil).</div>
-    <div class="draggable" draggable="true" data-correct="both" data-game="tv">İkisi de bize ışıkla görüntü ve ses verir.</div>
+    <div class="draggable" draggable="true" data-correct="right" data-game="tv">İnternete bağlanır ve video uygulamaları çalıştırır.</div>
+    <div class="draggable" draggable="true" data-correct="both" data-game="tv">Bize görüntü ve ses verir.</div>
 </div>
 <div class="container">
     <div class="card">
@@ -85,10 +85,10 @@ h2 { color:#ff6f61; margin-top:40px; }
 <div class="cards" id="washingCards">
     <div class="draggable" draggable="true" data-correct="left" data-game="washing">Suyu ve deterjanı elle ayarlamak gerekir.</div>
     <div class="draggable" draggable="true" data-correct="right" data-game="washing">Kendi kendine doğru suyu ve deterjanı ayarlar.</div>
-    <div class="draggable" draggable="true" data-correct="both" data-game="washing">İkisi de kirli çamaşırları temizler.</div>
+    <div class="draggable" draggable="true" data-correct="both" data-game="washing">Kirli çamaşırları temizler.</div>
     <div class="draggable" draggable="true" data-correct="left" data-game="washing">Giysileri kurutma özelliği yoktur.</div>
-    <div class="draggable" draggable="true" data-correct="right" data-game="washing">Giysileri yıkadıktan sonra kurutabilir (HDMI veya modern bağlantı yoktur).</div>
-    <div class="draggable" draggable="true" data-correct="both" data-game="washing">İkisi de çalışırken dönen bir hazneye (Tambur) sahiptir.</div>
+    <div class="draggable" draggable="true" data-correct="right" data-game="washing">Giysileri yıkadıktan sonra kurutabilir.</div>
+    <div class="draggable" draggable="true" data-correct="both" data-game="washing">Çalışırken dönen bir hazneye sahiptir.</div>
 </div>
 <div class="container">
     <div class="card">
@@ -161,6 +161,72 @@ document.getElementById("computerCheck").addEventListener("click", ()=>checkGame
 document.getElementById("tvCheck").addEventListener("click", ()=>checkGame("tv"));
 document.getElementById("washingCheck").addEventListener("click", ()=>checkGame("washing"));
 </script>
+<style>
+   /* 📱 MOBİL UYUMLU TASARIM */
+@media (max-width: 1024px) {
+.card {
+width: 90%;
+}
+.cards {
+gap: 8px;
+}
+}
+
+@media (max-width: 768px) {
+
+```
+/* Kartlar alt alta gelsin */
+.container {
+    flex-direction: column;
+    align-items: center;
+}
+
+.card {
+    width: 94%;
+}
+
+/* Resim boyutları düşürülüyor */
+.card img {
+    width: 140px;
+    height: 140px;
+}
+
+/* Bırakma alanı */
+.dropzone {
+    width: 95%;
+    min-height: 90px;
+}
+
+/* Sürüklenebilir kutular küçülüyor */
+.draggable {
+    font-size: 14px;
+    padding: 8px 10px;
+}
+
+h2 {
+    font-size: 20px;
+}
+```
+
+}
+
+@media (max-width: 480px) {
+
+```
+.card img {
+    width: 115px;
+    height: 115px;
+}
+
+.draggable {
+    max-width: 95%;
+}
+```
+
+}
+
+</style>
+
 
 </body>
 </html>
